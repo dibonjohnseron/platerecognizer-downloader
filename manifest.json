@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "PlateRecognizer Images Downloader",
+  "version": "1.0.0",
+  "permissions": ["downloads", "contextMenus", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "favicon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.platerecognizer.com/*"],
+      "js": ["./content.js"]
+    }
+  ]
+}

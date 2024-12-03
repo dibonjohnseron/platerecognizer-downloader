@@ -1,0 +1,36 @@
+name: Release Chrome Extension
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*" # Use the latest LTS version of Node.js
+
+      - name: Install Dependencies
+        run: npm install # If you have dependencies to install
+
+      - name: Build Extension
+        run: npm run build # Replace with your build command if needed
+
+      - name: Zip Extension
+        run: zip -r platerecognizer-downloader.zip dist/* # This command zips the contents of the dist folder
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }} # Use a versioning strategy
+          files: platerecognizer-downloader.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
